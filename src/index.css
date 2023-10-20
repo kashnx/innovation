@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bg-green-200 {
+    background-color: #9bf27f; /* Light green background */
+  }
