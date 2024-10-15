@@ -1,24 +1,36 @@
-import SignIn_Login from "./Sections/SignIn_Login";
-import Know_Me from "./Sections/Know_Me";
-import Location from "./Sections/Location";
-import Supplier from "./Sections/Supplier";
-import Receiver from "./Sections/Receiver";
-import Profile from "./Sections/Profile";
-import Homepage from "./Sections/HomePage";
-import WasteProductCard from "./Sections/WasteCard";
-import UserProfile from "./Sections/UserProfile";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+  Home,
+  AboutUs,
+  Auth,
+  PrivateRoute,
+  Dashboard,
+  Profile,
+  Location,
+  Role,
+  Error,
+} from "./RootImport.js";
 
 const App = () => {
+  const { token } = useSelector((state) => state.auth);
+  const location = useLocation();
+
   return (
-    <>
-      <SignIn_Login />
-      <Know_Me />
-      <Location />
-      <Profile/>
-      <Homepage/>
-      <WasteProductCard/>
-      <UserProfile/>
-    </>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/auth" element={!token && <Auth />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/user/dashboard" element={<Dashboard />} />
+          <Route path="/user/profile" element={<Profile />} />
+          <Route path="/user/location" element={<Location />} />
+          <Route path="/user/role" element={<Role />} />
+        </Route>
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </div>
   );
 };
 
